@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<style>
+table, th, td {
+  border: 1px solid black;
+  border-collapse: collapse;
+}
+th, td {
+  padding: 10px;
+}
+</style>
+<body>
+<button type="button" id = "btn" onclick="loadXMLDoc()">Get data</button>
+<br><br>
+
+<table id="demo"></table>
+
+<script>
+ function loadXMLDoc() {
+  var xmlhttp = new XMLHttpRequest();
+  xmlhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+
+       const x = JSON.parse(this.responseText);
+       var i;
+       var arraylen = x.data.length;
+       var table="<tr><th>Name</th><th>Team</th><th>Runs</th><th>Average</th></tr>";
+
+          for (i = 0; i < arraylen; i++) {
+          table += "<tr><td>" +
+          x.data[i].name +
+          "</td><td>" +
+          x.data[i].team +
+          "</td><td>" +
+          x.data[i].runs +
+          "</td><td>" +
+          x.data[i].average +
+          "</td></tr>";
+        }
+        document.getElementById("demo").innerHTML = table;
+  }
+
+  };
+  xmlhttp.open("GET", "lib/sample.json", true);
+  xmlhttp.send();
+}
+</script>
+
+</body>
+</html>
